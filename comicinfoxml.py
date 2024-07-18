@@ -296,6 +296,9 @@ class ComicInfoXml:
                 metadata.pages.append(page.attrib)
                 # print page.attrib
 
+        # Fork specific, parse GTIN
+        md.gtin = xlate('GTIN')
+
         metadata.isEmpty = False
 
         return metadata
