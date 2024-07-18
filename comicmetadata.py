@@ -238,6 +238,10 @@ class ComicMetadata:
         update_field("series", co.series)
         update_field("rating", co.criticalRating)
         update_field("publisher", co.publisher)
+
+        # Fork specific, update Calibre ids field to our ISBN
+        update_field("identifiers", {"isbn": co.gtin})
+
         # special cases
         if co.language:
             update_field("language", calibre_langcode_to_name(co.language))
