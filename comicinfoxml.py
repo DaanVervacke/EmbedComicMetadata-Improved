@@ -201,6 +201,9 @@ class ComicInfoXml:
         assign('Locations', md.locations)
         assign('ScanInformation', md.scanInfo)
 
+        # Fork specific
+        assign('GTIN', md.gtin)
+
         #  loop and add the page entries under pages node
         if len(md.pages) > 0:
             pages_node = ET.SubElement(root, 'Pages')
