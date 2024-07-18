@@ -195,6 +195,10 @@ class ComicMetadata:
         update_field("webLink", get_link(field(prefs['comicvine_column'])))
         update_field("manga", field(prefs['manga_column']))
 
+        # Fork specific, add ISBN to comic md if present,
+        if 'isbn' in mi.identifiers:
+            update_field("gtin", mi.identifiers['isbn'])
+
     def convert_comic_md_to_calibre_md(self, comic_metadata):
         '''
         Maps the entries in the comic_metadata to calibre metadata
