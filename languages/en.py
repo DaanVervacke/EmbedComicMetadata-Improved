@@ -24,6 +24,8 @@ en = {
     'Image size:': 'Image size:',
     'Comicvine link:': 'Comicvine link:',
     'Manga:': 'Manga:',
+    'Age Rating:': 'Age Rating:',
+    'Format:': 'Format:',
     # options (ini.py)
     "Options:": "Options:",
     'Write metadata in zip comment': 'Write metadata in zip comment',

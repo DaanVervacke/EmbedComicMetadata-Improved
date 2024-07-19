@@ -194,8 +194,16 @@ class ComicMetadata:
         update_field("pageCount", field(prefs['pages_column']))
         update_field("webLink", get_link(field(prefs['comicvine_column'])))
         update_field("manga", field(prefs['manga_column']))
+        
+        # Fork specific
 
-        # Fork specific, add ISBN to comic md if present,
+        # age rating
+        update_field("maturityRating", field(prefs['maturity_rating_column']))
+
+        # format
+        update_field("format", field(prefs['format_column']))
+
+        # add ISBN to comic md if present,
         if 'isbn' in mi.identifiers:
             update_field("gtin", mi.identifiers['isbn'])
 
@@ -302,6 +310,13 @@ class ComicMetadata:
             update_column(prefs['image_size_column'], self.get_picture_size())
         update_column(prefs['comicvine_column'], '<a href="{}">Comic Vine</a>'.format(co.webLink))
         update_column(prefs['manga_column'], co.manga)
+
+        # Fork specific
+        # age rating
+        update_column(prefs['maturity_rating_column'], co.maturityRating)
+
+        # format
+        update_column(prefs['format_column'], co.format)
 
         self.comic_md_in_calibre_format = mi
 
