@@ -214,7 +214,7 @@ class ComicMetadata:
         import unicodedata
         from calibre.ebooks.metadata import MetaInformation
         from calibre.utils.date import parse_only_date
-        from datetime import date
+        from datetime import date, datetime
         from calibre.utils.localization import calibre_langcode_to_name
 
         if self.comic_md_in_calibre_format:
@@ -272,14 +272,14 @@ class ComicMetadata:
         puby = co.year
         pubm = co.month
         pubd = co.day
+
         if puby is not None:
             try:
-                dt = date(
+                dt = datetime(
                     int(puby),
-                    6 if pubm is None else int(pubm),
-                    15 if pubd is None else int(pubd)
+                    1 if pubm is None else int(pubm),
+                    1 if pubd is None else int(pubd)
                 )
-                dt = parse_only_date(str(dt))
                 mi.pubdate = dt
             except:
                 pass
