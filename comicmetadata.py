@@ -6,7 +6,7 @@ __copyright__ = '2015, dloraine'
 __docformat__ = 'restructuredtext en'
 
 from functools import partial
-from zipfile import ZipFile
+from zipfile import ZipFile, ZIP_STORED
 from calibre.utils.zipfile import safe_replace
 from calibre.ptempfile import TemporaryFile, TemporaryDirectory
 
@@ -17,6 +17,8 @@ from calibre_plugins.EmbedComicMetadata.comicbookinfo import ComicBookInfo
 
 import os
 import sys
+import tempfile
+import shutil
 
 python3 = sys.version_info[0] > 2
 
@@ -113,10 +115,24 @@ class ComicMetadata:
 
         if not python3:
             cix_string = cix_string.decode('utf-8', 'ignore')
-        # use the safe_replace function from calibre to prevent coruption
+
         if self.zipinfo is not None:
-            with open(self.file, 'r+b') as zf:
-                safe_replace(zf, self.zipinfo, StringIO(cix_string))
+            # Create a temporary .cbz file
+            with tempfile.NamedTemporaryFile(suffix=".cbz", delete=False) as temp_file:
+                # Open the temporary file
+                with ZipFile(temp_file.name, 'w', ZIP_STORED) as new_zf:
+                    # Write the new ComicInfo.xml to the new file
+                    new_zf.writestr(self.zipinfo, cix_string)
+                    # Open the original file
+                    with ZipFile(self.file, 'r') as old_zf:
+                        # Copy all the other files from the original file
+                        for item in old_zf.infolist():
+                            if item.filename != self.zipinfo:
+                                data = old_zf.read(item.filename)
+                                new_zf.writestr(item.filename, data)
+
+            shutil.move(temp_file.name, self.file)
+            
         # save the metadata in the file
         else:
             zf = ZipFile(self.file, "a")
