@@ -62,10 +62,17 @@ class ComicInfoXml:
         header = '<?xml version="1.0"?>\n'
 
         tree = self.convertMetadataToXML(self, metadata)
-        if python3:
-            return header + ET.tostring(tree.getroot(), "unicode")
-        return header + ET.tostring(tree.getroot())
+        
+        # Use the built-in ET.indent function for pretty-printing
+        ET.indent(tree.getroot())
 
+        if python3:
+            xml_string = header + ET.tostring(tree.getroot(), "unicode")
+        else:
+            xml_string = header + ET.tostring(tree.getroot())
+
+        return xml_string
+    
     def indent(self, elem, level=0):
         # for making the XML output readable
         i = "\n" + level * "  "
@@ -107,7 +114,7 @@ class ComicInfoXml:
         assign('StoryArc', md.storyArc)
         assign('SeriesGroup', md.seriesGroup)
         assign('AlternateCount', md.alternateCount)
-        assign('Summary', md.comments)
+        assign('Summary', md.comments.rstrip('\n'))
         assign('Notes', md.notes)
         assign('Year', md.year)
         assign('Month', md.month)
@@ -210,9 +217,6 @@ class ComicInfoXml:
             for page_dict in md.pages:
                 page_node = ET.SubElement(pages_node, 'Page')
                 page_node.attrib = page_dict
-
-        # self pretty-print
-        self.indent(root)
 
         # wrap it in an ElementTree instance, and save as XML
         tree = ET.ElementTree(root)
