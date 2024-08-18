@@ -19,11 +19,10 @@ class EmbedComicMetadataBase(InterfaceActionBase):
     The reason for having two classes is that it allows the command line
     calibre utilities to run without needing to load the GUI libraries.
     '''
-    name                = 'Embed Comic Metadata'
-    description         = 'Embeds calibre metadata into comic archives and imports \
-                           metadata from comic archives into calibre.'
+    name                = 'Embed Comic Metadata Improved'
+    description         = 'A fork of the EmbedComicMetadata plugin for Calibre that fixes various issues and adds support for ISBN numbers.'
     supported_platforms = ['windows', 'osx', 'linux']
-    author              = 'dloraine'
+    author              = 'Vervacke Daan'
     version             = (1, 6, 6)
     minimum_calibre_version = (3, 1, 1)
 
