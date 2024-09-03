@@ -188,7 +188,7 @@ class ComicMetadata:
         if mi.pubdate != UNDEFINED_DATE:
             update_field("year", mi.pubdate.year)
             update_field("month", mi.pubdate.month)
-            update_field("day", mi.pubdate.day)
+            #update_field("day", mi.pubdate.day)
 
         # custom columns
         field = partial(self.db.field_for, book_id=self.book_id)
